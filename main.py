@@ -1,8 +1,10 @@
+from dotenv import load_dotenv
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException, NoSuchElementException
+from selenium.common.exceptions import TimeoutException
+import os
 import time
 
 
@@ -420,9 +422,11 @@ def main():
         login_mode = input("选择登录方式 (1: 自动登录, 2: 手动登录): ")
 
         if login_mode == "1":
-            # 自动登录，自行填写
-            email = ""
-            password = ""
+            # 自动登录，自行填写.env
+            load_dotenv()
+
+            email = os.getenv("EMAIL")
+            password = os.getenv("PASSWORD")
             if not auto_login(driver, email, password):
                 print("自动登录失败，程序退出")
                 return
